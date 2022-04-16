@@ -14,7 +14,7 @@ extension Double {
 
     /// If the difference of a `Double` to another is smaller than this
     /// they are considered equal
-    static var tolerance = 1e-7
+    static var tolerance = 1e-5
 
     /// Almost equal
     ///

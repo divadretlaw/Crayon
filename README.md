@@ -1,5 +1,8 @@
 # Crayon
 
+![Swift](https://img.shields.io/badge/Swift-5.4_5.5_5.6-orange?style=flat-square)
+![Platforms](https://img.shields.io/badge/Platforms-macOS_iOS_tvOS_watchOS-informational?style=flat-square)
+
 ## Usage
 
 In the example SwiftUI `Color` is used but it also works with `UIColor`, `NSColor` and `CGColor`.
@@ -31,6 +34,19 @@ Calculate the contrast and check if there is good (≥ 7:1) contrast
 ```swift
 Color.black.contrast(to: Color.white) // 21
 Color.black.hasContrast(with: Color.white) // true
+```
+
+Convert the color via `lighten`, `darken`, `saturate`, `desaturate`, `inverted` and `negative`
+
+```swift
+Color.red.negative(withOpacity: false)
+Color.red.inverted()
+
+Color.red.saturated()
+Color.red.desaturated()
+
+Color.red.ligthened()
+Color.red.darkened()
 ```
 
 You can also do basic calculations with colors

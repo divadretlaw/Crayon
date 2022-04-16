@@ -10,6 +10,22 @@ import SwiftUI
 
 @available(iOS 13, macOS 10.15, watchOS 6, tvOS 13, *)
 extension Color {
+    /// Creates a random color by randomly generating the values in the given color space
+    ///
+    /// - Parameters:
+    ///     - colorSpace: The ``ColorSpace`` to generate values in. Defaults to ``ColorSpace/rgb``
+    ///     - opacity: An optional degree of opacity, given in the range `0` to
+    ///     `1`. A value of `0` means 100% transparency, while a value of `1`
+    ///     means 100% opacity. The default is `1`.
+    static func random(_ colorSpace: ColorSpace = .rgb, opacity: Double = 1) -> Color {
+        switch colorSpace {
+        case .rgb, .rgba:
+            return Color(components: RgbComponents(alpha: opacity))
+        case .hsb, .hsba:
+            return Color(components: HsbComponents(alpha: opacity))
+        }
+    }
+    
     /// Checks if the color is dark
     ///
     /// - Returns: Wether the color is dark or not.
@@ -43,6 +59,67 @@ extension Color {
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
     public func hasContrast(with color: Color) -> Bool {
         rgbComponents.hasContrast(with: color.rgbComponents)
+    }
+
+    /// Calculates the negative of the color
+    ///
+    /// - Parameter withOpacity: Optionally provide the negative of the opacity too. Defaults to `false`
+    /// - Returns: The negative of the color
+    @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
+    public func negative(withOpacity: Bool = false) -> Color {
+        Color(components: rgbComponents.negative(withAlpha: withOpacity))
+    }
+    
+    /// Calculates the inversion of the color
+    ///
+    /// - Returns: The color inverted
+    @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
+    public func inverted() -> Color {
+        Color(components: hsbComponents.inverted())
+    }
+    
+    /// Saturates the color
+    ///
+    /// - Parameter percentage: An optional degree of how much to saturate, given in the range `0` to
+    ///     `1`. A value of `0` means no action, while a value of `1` means 100% added saturation.
+    ///     The default is `0.1`, or 10%
+    /// - Returns: The color saturated by the given percentage
+    @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
+    func saturated(percentage: Double = 0.1) -> Color {
+        Color(components: hsbComponents.saturate(percentage: percentage))
+    }
+    
+    /// Desaturates the color
+    ///
+    /// - Parameter percentage: An optional degree of how much to desaturate, given in the range `0` to
+    ///     `1`. A value of `0` means no action, while a value of `1` means 100% removed saturation.
+    ///     The default is `0.1`, or 10%
+    /// - Returns: The color desaturated by the given percentage
+    @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
+    func desaturated(percentage: Double = 0.1) -> Color {
+        Color(components: hsbComponents.desaturate(percentage: percentage))
+    }
+    
+    /// Darken the color
+    ///
+    /// - Parameter percentage: An optional degree of how much to darken, given in the range `0` to
+    ///     `1`. A value of `0` means no action, while a value of `1` means 100% darker.
+    ///     The default is `0.05`, or 5%
+    /// - Returns: The color darkened by the given percentage
+    @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
+    func darkened(percentage: Double = 0.05) -> Color {
+        Color(components: hsbComponents.darken(percentage: percentage))
+    }
+    
+    /// Lighten the color
+    ///
+    /// - Parameter percentage: An optional degree of how much to lighten, given in the range `0` to
+    ///     `1`. A value of `0` means no action, while a value of `1` means 100% lighter.
+    ///     The default is `0.05`, or 5%
+    /// - Returns: The color lightened by the given percentage
+    @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
+    func lightened(percentage: Double = 0.05) -> Color {
+        Color(components: hsbComponents.lighten(percentage: percentage))
     }
 
     /// Creates a constant color from the given hex string.
@@ -254,6 +331,29 @@ extension Color {
             return Color(components: components)
         case .hsba:
             let components = hsbComponentsOrWhite.divide(components: color.hsbComponentsOrWhite, withAlpha: true)
+            return Color(components: components)
+        }
+    }
+    
+    /// Mix another color with the color in the given ``ColorSpace``
+    ///
+    /// - Parameters:
+    ///     - colorSpace: The ``ColorSpace`` within to apply the calculation
+    ///     - with color: The color to mix with
+    /// - Returns: The mixed colors
+    public func mixed(_ colorSpace: ColorSpace = .rgb, with color: Color) -> Color {
+        switch colorSpace {
+        case .rgb:
+            let components = rgbComponents.mixed(components: color.rgbComponents, withAlpha: false)
+            return Color(components: components)
+        case .rgba:
+            let components = rgbComponents.mixed(components: color.rgbComponents, withAlpha: true)
+            return Color(components: components)
+        case .hsb:
+            let components = hsbComponents.mixed(components: color.hsbComponents, withAlpha: false)
+            return Color(components: components)
+        case .hsba:
+            let components = hsbComponents.mixed(components: color.hsbComponents, withAlpha: true)
             return Color(components: components)
         }
     }

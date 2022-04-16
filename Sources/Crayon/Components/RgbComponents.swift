@@ -87,6 +87,13 @@ struct RgbComponents: Equatable {
         let m = hsb.brightness - c
         self.init(red: r + m, green: g + m, blue: b + m, alpha: hsb.alpha)
     }
+    
+    init(alpha: Double) {
+        self.red = Double.random(in: 0 ... 1)
+        self.green = Double.random(in: 0 ... 1)
+        self.blue = Double.random(in: 0 ... 1)
+        self.alpha = alpha
+    }
 
     func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         [
@@ -144,6 +151,10 @@ struct RgbComponents: Equatable {
         let value: Bool = hasContrast(with: color)
         return value
     }
+    
+    func negative(withAlpha: Bool) -> RgbComponents {
+        RgbComponents(red: 1 - red, green: 1 - green, blue: 1 - blue, alpha: withAlpha ? 1 - alpha : alpha)
+    }
 
     // MARK: - Equatable
 
@@ -183,5 +194,17 @@ struct RgbComponents: Equatable {
                       green: green / components.green,
                       blue: blue / components.blue,
                       alpha: withAlpha ? alpha / components.alpha : alpha)
+    }
+    
+    func mixed(components: RgbComponents, weight: Double = 0.5, withAlpha: Bool) -> RgbComponents {
+        let weight = weight.normalized()
+        let red = (1 - weight) * red + weight * components.red
+        let green = (1 - weight) * green + weight * components.green
+        let blue = (1 - weight) * blue + weight * components.blue
+        let alpha = (1 - weight) * alpha + weight * components.alpha
+        return RgbComponents(red: red,
+                             green: green,
+                             blue: blue,
+                             alpha: withAlpha ? alpha : self.alpha)
     }
 }

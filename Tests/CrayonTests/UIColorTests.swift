@@ -81,5 +81,28 @@ final class UIColorTests: XCTestCase {
         XCTAssertEqual((UIColor.yellow - UIColor.green).rgbComponents, UIColor.red.rgbComponents)
         XCTAssertEqual((UIColor.red - UIColor.clear).rgbComponents, UIColor.red.rgbComponents)
     }
+    
+    func testInverted() {
+        XCTAssertEqual(UIColor.gray.inverted().rgbComponents, UIColor.gray.rgbComponents)
+    }
+    
+    func testNegative() {
+        XCTAssertEqual(UIColor.gray.negative().rgbComponents, UIColor.gray.rgbComponents)
+    }
+    
+    func testSaturation() {
+        let color = UIColor.red
+        XCTAssertEqual(color.hsbComponents, color.desaturated().saturated().hsbComponents)
+    }
+    
+    func testLightenDarken() {
+        let color = UIColor.red
+        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1) ~= color.lightened(percentage: 0.1).hsbComponents.brightness)
+        XCTAssertEqual(color.rgbComponents, color.darkened().lightened().rgbComponents)
+    }
+    
+    func testRandom() {
+        print(UIColor.random().rgbComponents)
+    }
 }
 #endif

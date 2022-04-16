@@ -99,4 +99,32 @@ final class ColorTests: XCTestCase {
         XCTAssertEqual((Color(.yellow) - Color(.green)).rgbComponents, Color(.red).rgbComponents)
         XCTAssertEqual((Color(.red) - Color(.clear)).rgbComponents, Color(.red).rgbComponents)
     }
+    
+    @available(iOS 14, macOS 12, watchOS 7, tvOS 14, *)
+    func testInverted() {
+        XCTAssertEqual(Color(.gray).inverted().rgbComponents, Color(.gray).rgbComponents)
+    }
+    
+    @available(iOS 14, macOS 12, watchOS 7, tvOS 14, *)
+    func testNegative() {
+        XCTAssertEqual(Color(.gray).negative().rgbComponents, Color(.gray).rgbComponents)
+    }
+    
+    @available(iOS 14, macOS 12, watchOS 7, tvOS 14, *)
+    func testSaturation() {
+        let color = Color.red
+        XCTAssertEqual(color.hsbComponents, color.saturated().desaturated().hsbComponents)
+    }
+    
+    @available(iOS 14, macOS 12, watchOS 7, tvOS 14, *)
+    func testLightenDarken() {
+        let color = Color.red
+        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1) ~= color.lightened(percentage: 0.1).hsbComponents.brightness)
+        XCTAssertEqual(color.rgbComponents, color.darkened().lightened().rgbComponents)
+    }
+    
+    @available(iOS 14, macOS 12, watchOS 7, tvOS 14, *)
+    func testRandom() {
+        print(Color.random().rgbComponents)
+    }
 }

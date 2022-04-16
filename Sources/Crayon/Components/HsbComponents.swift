@@ -62,6 +62,46 @@ struct HsbComponents: Equatable {
 
         self.alpha = rgb.alpha
     }
+    
+    init(alpha: Double) {
+        self.hue = Double.random(in: 0 ... 1)
+        self.saturation = Double.random(in: 0 ... 1)
+        self.brightness = Double.random(in: 0 ... 1)
+        self.alpha = alpha
+    }
+    
+    func inverted() -> HsbComponents {
+        let hue = (hue * 360 + 180).truncatingRemainder(dividingBy: 360) / 360
+        return HsbComponents(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
+    }
+    
+    func saturate(percentage: Double) -> HsbComponents {
+        HsbComponents(hue: hue,
+                      saturation: saturation + percentage.normalized(),
+                      brightness: brightness,
+                      alpha: alpha)
+    }
+    
+    func desaturate(percentage: Double) -> HsbComponents {
+        HsbComponents(hue: hue,
+                      saturation: saturation - percentage.normalized(),
+                      brightness: brightness,
+                      alpha: alpha)
+    }
+    
+    func darken(percentage: Double) -> HsbComponents {
+        HsbComponents(hue: hue,
+                      saturation: saturation,
+                      brightness: brightness - percentage.normalized(),
+                      alpha: alpha)
+    }
+    
+    func lighten(percentage: Double) -> HsbComponents {
+        HsbComponents(hue: hue,
+                      saturation: saturation,
+                      brightness: brightness + percentage.normalized(),
+                      alpha: alpha)
+    }
 
     // MARK: - Equatable
 
@@ -101,5 +141,17 @@ struct HsbComponents: Equatable {
                       saturation: saturation / components.saturation,
                       brightness: brightness / components.brightness,
                       alpha: withAlpha ? alpha / components.alpha : alpha)
+    }
+    
+    func mixed(components: HsbComponents, weight: Double = 0.5, withAlpha: Bool) -> HsbComponents {
+        let weight = weight.normalized()
+        let hue = (1 - weight) * hue + weight * components.hue
+        let saturation = (1 - weight) * saturation + weight * components.saturation
+        let brightness = (1 - weight) * brightness + weight * components.brightness
+        let alpha = (1 - weight) * alpha + weight * components.alpha
+        return HsbComponents(hue: hue,
+                             saturation: saturation,
+                             brightness: brightness,
+                             alpha: withAlpha ? alpha : self.alpha)
     }
 }
