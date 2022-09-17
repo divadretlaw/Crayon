@@ -11,7 +11,7 @@ import UIKit
 import AppKit
 #endif
 
-extension CGColor {
+public extension CGColor {
     /// Creates a random color by randomly generating the values in the given color space
     ///
     /// - Parameters:
@@ -32,7 +32,7 @@ extension CGColor {
     /// Checks if the color is dark
     ///
     /// - Returns: Wether the color is dark or not. Returns `nil` if determination wasn't possible
-    public var isDark: Bool? {
+    var isDark: Bool? {
         guard let lightness = rgbComponents?.lightness else { return nil }
         return lightness < 0.5
     }
@@ -41,7 +41,7 @@ extension CGColor {
     ///
     /// - Parameter to: Color to check the contrast against
     /// - Returns: The contrast ratio. Returns `nil` if determination wasn't possible
-    public func contrast(to color: CGColor) -> CGFloat? {
+    func contrast(to color: CGColor) -> CGFloat? {
         guard let l1 = rgbComponents?.lightness,
               let l2 = color.rgbComponents?.lightness
         else {
@@ -59,7 +59,7 @@ extension CGColor {
     ///
     /// - Parameter with color: Color to check the contrast against
     /// - Returns: Wether the color contrast ratio is at least 7:1. Returns `nil` if determination wasn't possible
-    public func hasContrast(with color: CGColor) -> Bool? {
+    func hasContrast(with color: CGColor) -> Bool? {
         guard let contrast = contrast(to: color) else {
             return nil
         }
@@ -71,7 +71,7 @@ extension CGColor {
     ///
     /// - Returns: Wether the color is light or not. Returns `nil` if determination wasn't possible
     ///
-    public var isLight: Bool? {
+    var isLight: Bool? {
         guard let isDark = isDark else {
             return nil
         }
@@ -83,7 +83,7 @@ extension CGColor {
     /// - Parameter withOpacity: Optionally provide the negative of the alpha (opacity) too. Defaults to `false`
     /// - Returns: The negative of the color
     @available(iOS 13, watchOS 6, tvOS 13, *)
-    public func negative(withAlpha: Bool = false) -> CGColor? {
+    func negative(withAlpha: Bool = false) -> CGColor? {
         guard let rgbComponents = rgbComponents else { return nil }
         return CGColor.from(rgb: rgbComponents.negative(withAlpha: withAlpha))
     }
@@ -92,7 +92,7 @@ extension CGColor {
     ///
     /// - Returns: The color inverted
     @available(iOS 13, watchOS 6, tvOS 13, *)
-    public func inverted() -> CGColor? {
+    func inverted() -> CGColor? {
         guard let hsbComponents = hsbComponents else { return nil }
         return CGColor.from(hsb: hsbComponents.inverted())
     }
@@ -151,7 +151,7 @@ extension CGColor {
     /// - Parameter alpha: Wether to include the alpha channel in the hex String
     ///
     /// - Returns: The hex string or `nil` if the color couldn't be determined
-    public func hex(prefix: String? = "#", withAlpha: Bool = false) -> String? {
+    func hex(prefix: String? = "#", withAlpha: Bool = false) -> String? {
         rgbComponents?.hex(prefix: prefix, withAlpha: withAlpha)
     }
 }

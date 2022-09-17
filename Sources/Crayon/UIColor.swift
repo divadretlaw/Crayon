@@ -8,7 +8,7 @@
 #if canImport(UIKit)
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     /// Creates a random color by randomly generating the values in the given color space
     ///
     /// - Parameters:
@@ -28,14 +28,14 @@ extension UIColor {
     /// Checks if the color is dark
     ///
     /// - Returns: Wether the color is dark or not.
-    public var isDark: Bool {
+    var isDark: Bool {
         rgbComponents.isDark
     }
 
     /// Checks if the color is light
     ///
     /// - Returns: Wether the color is light or not.
-    public var isLight: Bool {
+    var isLight: Bool {
         !isDark
     }
 
@@ -43,7 +43,7 @@ extension UIColor {
     ///
     /// - Parameter to color: Color to check the contrast against
     /// - Returns: The contrast ratio.
-    public func contrast(to color: UIColor) -> CGFloat {
+    func contrast(to color: UIColor) -> CGFloat {
         rgbComponents.contrast(to: color.rgbComponents)
     }
 
@@ -51,7 +51,7 @@ extension UIColor {
     ///
     /// - Parameter with color: Color to check the contrast against
     /// - Returns: Wether the color contrast ratio is at least 7:1.
-    public func hasContrast(with color: UIColor) -> Bool {
+    func hasContrast(with color: UIColor) -> Bool {
         rgbComponents.hasContrast(with: color.rgbComponents)
     }
 
@@ -59,14 +59,14 @@ extension UIColor {
     ///
     /// - Parameter withOpacity: Optionally provide the negative of the alpha (opacity) too. Defaults to `false`
     /// - Returns: The negative of the color
-    public func negative(withAlpha: Bool = false) -> UIColor {
+    func negative(withAlpha: Bool = false) -> UIColor {
         UIColor(components: rgbComponents.negative(withAlpha: withAlpha))
     }
     
     /// Calculates the inversion of the color
     ///
     /// - Returns: The color inverted
-    public func inverted() -> UIColor {
+    func inverted() -> UIColor {
         UIColor(components: hsbComponents.inverted())
     }
     
@@ -113,7 +113,7 @@ extension UIColor {
     /// Creates a constant color from the given hex string.
     ///
     /// - Parameter hex: The hex string of the color.
-    public convenience init(hex string: String) {
+    convenience init(hex string: String) {
         guard let components = RgbComponents(string) else {
             self.init(white: 1, alpha: 0)
             return
@@ -126,7 +126,7 @@ extension UIColor {
     ///
     /// - Parameter prefix: The prefix of the hex value. Defaults to `#`
     /// - Parameter alpha: Wether to include the alpha channel in the hex String
-    public func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
+    func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         RgbComponents(color: self).hex(prefix: prefix, withAlpha: withAlpha)
     }
 }

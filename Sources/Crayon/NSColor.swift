@@ -8,7 +8,7 @@
 #if canImport(AppKit) && os(macOS)
 import AppKit
 
-extension NSColor {
+public extension NSColor {
     /// Creates a random color by randomly generating the values in the given color space
     ///
     /// - Parameters:
@@ -28,14 +28,14 @@ extension NSColor {
     /// Checks if the color is dark
     ///
     /// - Returns: Wether the color is dark or not.
-    public var isDark: Bool {
+    var isDark: Bool {
         rgbComponents.isDark
     }
 
     /// Checks if the color is light
     ///
     /// - Returns: Wether the color is light or not.
-    public var isLight: Bool {
+    var isLight: Bool {
         !isDark
     }
 
@@ -44,7 +44,7 @@ extension NSColor {
     /// - Parameter to color: Color to check the contrast against
     /// - Returns: The contrast ratio.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func contrast(to color: NSColor) -> Double {
+    func contrast(to color: NSColor) -> Double {
         rgbComponents.contrast(to: color.rgbComponents)
     }
 
@@ -53,7 +53,7 @@ extension NSColor {
     /// - Parameter with color: Color to check the contrast against
     /// - Returns: Wether the color contrast ratio is at least 7:1.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func hasContrast(with color: NSColor) -> Bool {
+    func hasContrast(with color: NSColor) -> Bool {
         rgbComponents.hasContrast(with: color.rgbComponents)
     }
 
@@ -62,7 +62,7 @@ extension NSColor {
     /// - Parameter withOpacity: Optionally provide the negative of the alpha (opacity) too. Defaults to `false`
     /// - Returns: The negative of the color
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func negative(withAlpha: Bool = false) -> NSColor {
+     func negative(withAlpha: Bool = false) -> NSColor {
         NSColor(components: rgbComponents.negative(withAlpha: withAlpha))
     }
     
@@ -70,7 +70,7 @@ extension NSColor {
     ///
     /// - Returns: The color inverted
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func inverted() -> NSColor {
+    func inverted() -> NSColor {
         NSColor(components: hsbComponents.inverted())
     }
     
@@ -121,7 +121,7 @@ extension NSColor {
     /// Creates a constant color from the given hex string.
     ///
     /// - Parameter hex: The hex string of the color.
-    public convenience init(hex string: String) {
+    convenience init(hex string: String) {
         guard let components = RgbComponents(string) else {
             self.init(white: 1, alpha: 0)
             return
@@ -134,7 +134,7 @@ extension NSColor {
     ///
     /// - Parameter prefix: The prefix of the hex value. Defaults to `#`
     /// - Parameter alpha: Wether to include the alpha channel in the hex String
-    public func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
+    func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         rgbComponents.hex(prefix: prefix, withAlpha: withAlpha)
     }
 }

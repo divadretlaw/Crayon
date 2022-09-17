@@ -8,14 +8,14 @@
 #if canImport(UIKit) && !os(watchOS)
 import UIKit
 
-extension UIImage {
+public extension UIImage {
     /// Create an `UIImage` from a color
-    public convenience init?(color: UIColor?) {
+    convenience init?(color: UIColor?) {
         self.init(color: color?.cgColor)
     }
 
     /// Create an `UIImage` from a color
-    public convenience init?(color: CGColor?) {
+    convenience init?(color: CGColor?) {
         guard let color = color else { return nil }
 
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
@@ -43,10 +43,10 @@ extension UIImage {
 import SwiftUI
 
 @available(iOS 13, watchOS 6, tvOS 13, *)
-extension Image {
+public extension Image {
     /// Create an `Image` from a color
     @available(iOS 14, watchOS 7, tvOS 14, *)
-    public init?(color: Color?) {
+    init?(color: Color?) {
         guard let color = color else { return nil }
         let cgColor = color.cgColor ?? UIColor(color).cgColor
         guard let uiImage = UIImage(color: cgColor) else { return nil }
@@ -54,13 +54,13 @@ extension Image {
     }
 
     /// Create an `Image` from a color
-    public init?(color: CGColor?) {
+    init?(color: CGColor?) {
         guard let uiImage = UIImage(color: color) else { return nil }
         self.init(uiImage: uiImage)
     }
 
     /// Create an `Image` from a color
-    public init?(color: UIColor?) {
+    init?(color: UIColor?) {
         guard let uiImage = UIImage(color: color) else { return nil }
         self.init(uiImage: uiImage)
     }

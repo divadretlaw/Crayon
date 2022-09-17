@@ -9,7 +9,7 @@
 import SwiftUI
 
 @available(iOS 13, macOS 10.15, watchOS 6, tvOS 13, *)
-extension Color {
+public extension Color {
     /// Creates a random color by randomly generating the values in the given color space
     ///
     /// - Parameters:
@@ -30,7 +30,7 @@ extension Color {
     ///
     /// - Returns: Wether the color is dark or not.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public var isDark: Bool {
+    var isDark: Bool {
         rgbComponents.isDark
     }
 
@@ -39,7 +39,7 @@ extension Color {
     /// - Returns: Wether the color is light or not.
     ///
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public var isLight: Bool {
+    var isLight: Bool {
         !isDark
     }
 
@@ -48,7 +48,7 @@ extension Color {
     /// - Parameter to color: Color to check the contrast against
     /// - Returns: The contrast ratio.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func contrast(to color: Color) -> Double {
+    func contrast(to color: Color) -> Double {
         rgbComponents.contrast(to: color.rgbComponents)
     }
 
@@ -57,7 +57,7 @@ extension Color {
     /// - Parameter with color: Color to check the contrast against
     /// - Returns: Wether the color contrast ratio is at least 7:1.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func hasContrast(with color: Color) -> Bool {
+    func hasContrast(with color: Color) -> Bool {
         rgbComponents.hasContrast(with: color.rgbComponents)
     }
 
@@ -66,7 +66,7 @@ extension Color {
     /// - Parameter withOpacity: Optionally provide the negative of the opacity too. Defaults to `false`
     /// - Returns: The negative of the color
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func negative(withOpacity: Bool = false) -> Color {
+    func negative(withOpacity: Bool = false) -> Color {
         Color(components: rgbComponents.negative(withAlpha: withOpacity))
     }
     
@@ -74,7 +74,7 @@ extension Color {
     ///
     /// - Returns: The color inverted
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func inverted() -> Color {
+    func inverted() -> Color {
         Color(components: hsbComponents.inverted())
     }
     
@@ -128,7 +128,7 @@ extension Color {
     ///   - colorSpace: The profile that specifies how to interpret the color
     ///     for display. The default is ``RGBColorSpace/sRGB``.
     ///   - hex: The hex `String` of the color.
-    public init(_ colorSpace: Color.RGBColorSpace = .sRGB, hex string: String) {
+    init(_ colorSpace: Color.RGBColorSpace = .sRGB, hex string: String) {
         guard let components = RgbComponents(string) else {
             self.init(.sRGB, white: 1, opacity: 0)
             return
@@ -142,7 +142,7 @@ extension Color {
     /// - Parameter hashPrefix: Wether to prefix the String with `#`
     /// - Parameter alpha: Wether to include the alpha channel in the hex String
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
-    public func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
+    func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         rgbComponents.hex(prefix: prefix, withAlpha: withAlpha)
     }
 }
