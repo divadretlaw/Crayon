@@ -25,6 +25,27 @@ public extension UIColor {
         }
     }
     
+    #if !os(watchOS)
+    /// Calculates a readable color on a given color
+    ///
+    /// - Parameters:
+    ///     - color: The color to calculate on
+    ///     - onBright: The color to use on bright colors. Defaults to `.black`
+    ///     - onDark: The color to use on dark colors. Defaults to `.white`
+    /// - Returns: `onBright` or `onDark` depending if the given color is bright or dark
+    @available(iOS 13, tvOS 13, *)
+    static func on(color: UIColor, onBright: UIColor = .black, onDark: UIColor = .white) -> UIColor {
+        UIColor {
+            switch color.resolvedColor(with: $0).isDark {
+            case true:
+                return onDark
+            case false:
+                return onBright
+            }
+        }
+    }
+    #endif
+    
     /// Checks if the color is dark
     ///
     /// - Returns: Wether the color is dark or not.

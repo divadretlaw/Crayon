@@ -147,6 +147,28 @@ public extension Color {
     }
 }
 
+#if !os(watchOS) && canImport(UIKit)
+import UIKit
+
+@available(iOS 13, macOS 10.15, watchOS 6, tvOS 13, *)
+public extension Color {
+    /// Calculates a readable color on a given color
+    ///
+    /// - Parameters:
+    ///     - color: The color to calculate on
+    ///     - onBright: The color to use on bright colors. Defaults to `.black`
+    ///     - onDark: The color to use on dark colors. Defaults to `.white`
+    /// - Returns: `onBright` or `onDark` depending if the given color is bright or dark
+    @available(iOS 15, tvOS 15, *)
+    static func on(color: Color, onBright: Color = .black, onDark: Color = .white) -> Color {
+        let uiColor = UIColor.on(color: UIColor(color),
+                                 onBright: UIColor(onBright),
+                                 onDark: UIColor(onDark))
+        return Color(uiColor: uiColor)
+    }
+}
+#endif
+
 // MARK: - Components
 
 @available(iOS 13, macOS 10.15, watchOS 6, tvOS 13, *)
