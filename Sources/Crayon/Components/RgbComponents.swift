@@ -103,8 +103,8 @@ struct RgbComponents: Equatable {
             String(format: "%02X", Int(blue * 255)),
             withAlpha ? String(format: "%02X", Int(alpha * 255)) : nil
         ]
-            .compactMap { $0 }
-            .joined()
+        .compactMap { $0 }
+        .joined()
     }
 
     var lightness: Double {
@@ -145,9 +145,7 @@ struct RgbComponents: Equatable {
     }
 
     func hasContrast(with color: RgbComponents?) -> Bool? {
-        guard let color = color else {
-            return nil
-        }
+        guard let color = color else { return nil }
         let value: Bool = hasContrast(with: color)
         return value
     }
@@ -196,7 +194,7 @@ struct RgbComponents: Equatable {
                       alpha: withAlpha ? alpha / components.alpha : alpha)
     }
     
-    func mixed(components: RgbComponents, weight: Double = 0.5, withAlpha: Bool) -> RgbComponents {
+    func mix(components: RgbComponents, weight: Double = 0.5, withAlpha: Bool) -> RgbComponents {
         let weight = weight.normalized()
         let red = (1 - weight) * red + weight * components.red
         let green = (1 - weight) * green + weight * components.green

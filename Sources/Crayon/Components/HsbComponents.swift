@@ -143,7 +143,7 @@ struct HsbComponents: Equatable {
                       alpha: withAlpha ? alpha / components.alpha : alpha)
     }
     
-    func mixed(components: HsbComponents, weight: Double = 0.5, withAlpha: Bool) -> HsbComponents {
+    func mix(components: HsbComponents, weight: Double = 0.5, withAlpha: Bool) -> HsbComponents {
         let weight = weight.normalized()
         let hue = (1 - weight) * hue + weight * components.hue
         let saturation = (1 - weight) * saturation + weight * components.saturation

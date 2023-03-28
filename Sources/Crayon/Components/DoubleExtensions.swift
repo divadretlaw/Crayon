@@ -21,6 +21,6 @@ extension Double {
     /// Compares two `Double` if they are almost equal
     /// See `Double.tolerance`
     static func ~= (lhs: Double, rhs: Double) -> Bool {
-        abs(lhs - rhs) < Double.tolerance
+        fabs(lhs - rhs) < Double.tolerance
     }
 }

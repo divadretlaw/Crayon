@@ -10,11 +10,15 @@ import UIKit
 
 public extension UIImage {
     /// Create an `UIImage` from a color
+    ///
+    /// - Parameter color: The `UIColor` to create the `Image` from.
     convenience init?(color: UIColor?) {
         self.init(color: color?.cgColor)
     }
 
     /// Create an `UIImage` from a color
+    ///
+    /// - Parameter color: The `CGColor` to create the `Image` from.
     convenience init?(color: CGColor?) {
         guard let color = color else { return nil }
 
@@ -45,6 +49,8 @@ import SwiftUI
 @available(iOS 13, watchOS 6, tvOS 13, *)
 public extension Image {
     /// Create an `Image` from a color
+    ///
+    /// - Parameter color: The `Color` to create the `Image` from.
     @available(iOS 14, watchOS 7, tvOS 14, *)
     init?(color: Color?) {
         guard let color = color else { return nil }
@@ -54,12 +60,16 @@ public extension Image {
     }
 
     /// Create an `Image` from a color
+    ///
+    /// - Parameter color: The `CGColor` to create the `Image` from.
     init?(color: CGColor?) {
         guard let uiImage = UIImage(color: color) else { return nil }
         self.init(uiImage: uiImage)
     }
 
     /// Create an `Image` from a color
+    ///
+    /// - Parameter color: The `UIColor` to create the `Image` from.
     init?(color: UIColor?) {
         guard let uiImage = UIImage(color: color) else { return nil }
         self.init(uiImage: uiImage)

@@ -20,7 +20,7 @@ let black = Color(hex: "#000000")
 
 ### `isDark` & `isLight`
 
-Check wether a color is dark or light
+Check whether a color is dark or light
 
 ```swift
 Color.white.isDark // false

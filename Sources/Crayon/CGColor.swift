@@ -31,7 +31,7 @@ public extension CGColor {
     
     /// Checks if the color is dark
     ///
-    /// - Returns: Wether the color is dark or not. Returns `nil` if determination wasn't possible
+    /// - Returns: Whether the color is dark or not. Returns `nil` if determination wasn't possible
     var isDark: Bool? {
         guard let lightness = rgbComponents?.lightness else { return nil }
         return lightness < 0.5
@@ -57,8 +57,8 @@ public extension CGColor {
 
     /// Checks if the contrast ratio is at least 7:1
     ///
-    /// - Parameter with color: Color to check the contrast against
-    /// - Returns: Wether the color contrast ratio is at least 7:1. Returns `nil` if determination wasn't possible
+    /// - Parameter color: Color to check the contrast against
+    /// - Returns: Whether the color contrast ratio is at least 7:1. Returns `nil` if determination wasn't possible
     func hasContrast(with color: CGColor) -> Bool? {
         guard let contrast = contrast(to: color) else {
             return nil
@@ -69,7 +69,7 @@ public extension CGColor {
 
     /// Checks if the color is light
     ///
-    /// - Returns: Wether the color is light or not. Returns `nil` if determination wasn't possible
+    /// - Returns: Whether the color is light or not. Returns `nil` if determination wasn't possible
     ///
     var isLight: Bool? {
         guard let isDark = isDark else {
@@ -148,7 +148,7 @@ public extension CGColor {
     /// Returns the hex value as String
     ///
     /// - Parameter prefix: The prefix of the hex value. Defaults to `#`
-    /// - Parameter alpha: Wether to include the alpha channel in the hex String
+    /// - Parameter alpha: Whether to include the alpha channel in the hex String
     ///
     /// - Returns: The hex string or `nil` if the color couldn't be determined
     func hex(prefix: String? = "#", withAlpha: Bool = false) -> String? {
@@ -368,21 +368,21 @@ extension CGColor {
     ///
     /// - Parameters:
     ///     - colorSpace: The ``ColorSpace`` within to apply the calculation
-    ///     - with color: The color to mix with
+    ///     - color: The color to mix with
     /// - Returns: The mixed colors
-    public func mixed(_ colorSpace: ColorSpace = .rgb, with color: CGColor) -> CGColor {
+    public func mix(_ colorSpace: ColorSpace = .rgb, color: CGColor) -> CGColor {
         switch colorSpace {
         case .rgb:
-            let components = rgbComponentsOrBlack.mixed(components: color.rgbComponentsOrBlack, withAlpha: false)
+            let components = rgbComponentsOrBlack.mix(components: color.rgbComponentsOrBlack, withAlpha: false)
             return CGColor.from(rgb: components)
         case .rgba:
-            let components = rgbComponentsOrBlack.mixed(components: color.rgbComponentsOrBlack, withAlpha: true)
+            let components = rgbComponentsOrBlack.mix(components: color.rgbComponentsOrBlack, withAlpha: true)
             return CGColor.from(rgb: components)
         case .hsb:
-            let components = hsbComponentsOrBlack.mixed(components: color.hsbComponentsOrBlack, withAlpha: false)
+            let components = hsbComponentsOrBlack.mix(components: color.hsbComponentsOrBlack, withAlpha: false)
             return CGColor.from(hsb: components)
         case .hsba:
-            let components = hsbComponentsOrBlack.mixed(components: color.hsbComponentsOrBlack, withAlpha: true)
+            let components = hsbComponentsOrBlack.mix(components: color.hsbComponentsOrBlack, withAlpha: true)
             return CGColor.from(hsb: components)
         }
     }

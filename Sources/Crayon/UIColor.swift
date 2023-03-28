@@ -48,21 +48,21 @@ public extension UIColor {
     
     /// Checks if the color is dark
     ///
-    /// - Returns: Wether the color is dark or not.
+    /// - Returns: Whether the color is dark or not.
     var isDark: Bool {
         rgbComponents.isDark
     }
 
     /// Checks if the color is light
     ///
-    /// - Returns: Wether the color is light or not.
+    /// - Returns: Whether the color is light or not.
     var isLight: Bool {
         !isDark
     }
 
     /// Calculates the contrast ratio to the given color
     ///
-    /// - Parameter to color: Color to check the contrast against
+    /// - Parameter color: Color to check the contrast against
     /// - Returns: The contrast ratio.
     func contrast(to color: UIColor) -> CGFloat {
         rgbComponents.contrast(to: color.rgbComponents)
@@ -70,8 +70,8 @@ public extension UIColor {
 
     /// Checks if the contrast ratio is at least 7:1
     ///
-    /// - Parameter with color: Color to check the contrast against
-    /// - Returns: Wether the color contrast ratio is at least 7:1.
+    /// - Parameter color: Color to check the contrast against
+    /// - Returns: Whether the color contrast ratio is at least 7:1.
     func hasContrast(with color: UIColor) -> Bool {
         rgbComponents.hasContrast(with: color.rgbComponents)
     }
@@ -146,7 +146,7 @@ public extension UIColor {
     /// Returns the hex value as String
     ///
     /// - Parameter prefix: The prefix of the hex value. Defaults to `#`
-    /// - Parameter alpha: Wether to include the alpha channel in the hex String
+    /// - Parameter alpha: Whether to include the alpha channel in the hex String
     func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         RgbComponents(color: self).hex(prefix: prefix, withAlpha: withAlpha)
     }
@@ -313,21 +313,21 @@ extension UIColor {
     ///
     /// - Parameters:
     ///     - colorSpace: The ``ColorSpace`` within to apply the calculation
-    ///     - with color: The color to mix with
+    ///     - color: The color to mix with
     /// - Returns: The mixed colors
-    public func mixed(_ colorSpace: ColorSpace = .rgb, with color: UIColor) -> UIColor {
+    public func mix(_ colorSpace: ColorSpace = .rgb, color: UIColor) -> UIColor {
         switch colorSpace {
         case .rgb:
-            let components = rgbComponents.mixed(components: color.rgbComponents, withAlpha: false)
+            let components = rgbComponents.mix(components: color.rgbComponents, withAlpha: false)
             return UIColor(components: components)
         case .rgba:
-            let components = rgbComponents.mixed(components: color.rgbComponents, withAlpha: true)
+            let components = rgbComponents.mix(components: color.rgbComponents, withAlpha: true)
             return UIColor(components: components)
         case .hsb:
-            let components = hsbComponents.mixed(components: color.hsbComponents, withAlpha: false)
+            let components = hsbComponents.mix(components: color.hsbComponents, withAlpha: false)
             return UIColor(components: components)
         case .hsba:
-            let components = hsbComponents.mixed(components: color.hsbComponents, withAlpha: true)
+            let components = hsbComponents.mix(components: color.hsbComponents, withAlpha: true)
             return UIColor(components: components)
         }
     }

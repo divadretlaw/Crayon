@@ -27,14 +27,14 @@ public extension NSColor {
     
     /// Checks if the color is dark
     ///
-    /// - Returns: Wether the color is dark or not.
+    /// - Returns: Whether the color is dark or not.
     var isDark: Bool {
         rgbComponents.isDark
     }
 
     /// Checks if the color is light
     ///
-    /// - Returns: Wether the color is light or not.
+    /// - Returns: Whether the color is light or not.
     var isLight: Bool {
         !isDark
     }
@@ -50,8 +50,8 @@ public extension NSColor {
 
     /// Checks if the contrast ratio is at least 7:1
     ///
-    /// - Parameter with color: Color to check the contrast against
-    /// - Returns: Wether the color contrast ratio is at least 7:1.
+    /// - Parameter color: Color to check the contrast against
+    /// - Returns: Whether the color contrast ratio is at least 7:1.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
     func hasContrast(with color: NSColor) -> Bool {
         rgbComponents.hasContrast(with: color.rgbComponents)
@@ -133,7 +133,7 @@ public extension NSColor {
     /// Returns the hex value as String
     ///
     /// - Parameter prefix: The prefix of the hex value. Defaults to `#`
-    /// - Parameter alpha: Wether to include the alpha channel in the hex String
+    /// - Parameter alpha: Whether to include the alpha channel in the hex String
     func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         rgbComponents.hex(prefix: prefix, withAlpha: withAlpha)
     }
@@ -328,21 +328,21 @@ extension NSColor {
     ///
     /// - Parameters:
     ///     - colorSpace: The ``ColorSpace`` within to apply the calculation
-    ///     - with color: The color to mix with
+    ///     - color: The color to mix with
     /// - Returns: The mixed colors
-    public func mixed(_ colorSpace: ColorSpace = .rgb, with color: NSColor) -> NSColor {
+    public func mix(_ colorSpace: ColorSpace = .rgb, color: NSColor) -> NSColor {
         switch colorSpace {
         case .rgb:
-            let components = rgbComponentsOrBlack.mixed(components: color.rgbComponentsOrBlack, withAlpha: false)
+            let components = rgbComponentsOrBlack.mix(components: color.rgbComponentsOrBlack, withAlpha: false)
             return NSColor(components: components)
         case .rgba:
-            let components = rgbComponentsOrBlack.mixed(components: color.rgbComponentsOrBlack, withAlpha: true)
+            let components = rgbComponentsOrBlack.mix(components: color.rgbComponentsOrBlack, withAlpha: true)
             return NSColor(components: components)
         case .hsb:
-            let components = hsbComponentsOrBlack.mixed(components: color.hsbComponentsOrBlack, withAlpha: false)
+            let components = hsbComponentsOrBlack.mix(components: color.hsbComponentsOrBlack, withAlpha: false)
             return NSColor(components: components)
         case .hsba:
-            let components = hsbComponentsOrBlack.mixed(components: color.hsbComponentsOrBlack, withAlpha: true)
+            let components = hsbComponentsOrBlack.mix(components: color.hsbComponentsOrBlack, withAlpha: true)
             return NSColor(components: components)
         }
     }

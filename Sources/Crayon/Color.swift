@@ -28,21 +28,20 @@ public extension Color {
     
     /// Checks if the color is dark
     ///
-    /// - Returns: Wether the color is dark or not.
+    /// - Returns: Whether the color is dark or not.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
     var isDark: Bool {
         rgbComponents.isDark
     }
-
+    
     /// Checks if the color is light
     ///
-    /// - Returns: Wether the color is light or not.
-    ///
+    /// - Returns: Whether the color is light or not.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
     var isLight: Bool {
         !isDark
     }
-
+    
     /// Calculates the contrast ratio to the given color
     ///
     /// - Parameter to color: Color to check the contrast against
@@ -51,16 +50,16 @@ public extension Color {
     func contrast(to color: Color) -> Double {
         rgbComponents.contrast(to: color.rgbComponents)
     }
-
+    
     /// Checks if the contrast ratio is at least 7:1
     ///
-    /// - Parameter with color: Color to check the contrast against
-    /// - Returns: Wether the color contrast ratio is at least 7:1.
+    /// - Parameter color: Color to check the contrast against
+    /// - Returns: Whether the color contrast ratio is at least 7:1.
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
     func hasContrast(with color: Color) -> Bool {
         rgbComponents.hasContrast(with: color.rgbComponents)
     }
-
+    
     /// Calculates the negative of the color
     ///
     /// - Parameter withOpacity: Optionally provide the negative of the opacity too. Defaults to `false`
@@ -121,7 +120,7 @@ public extension Color {
     func lightened(percentage: Double = 0.05) -> Color {
         Color(components: hsbComponents.lighten(percentage: percentage))
     }
-
+    
     /// Creates a constant color from the given hex string.
     ///
     /// - Parameters:
@@ -133,14 +132,14 @@ public extension Color {
             self.init(.sRGB, white: 1, opacity: 0)
             return
         }
-
+        
         self.init(colorSpace, components: components)
     }
-
+    
     /// Returns the hex value as String
     ///
-    /// - Parameter hashPrefix: Wether to prefix the String with `#`
-    /// - Parameter alpha: Wether to include the alpha channel in the hex String
+    /// - Parameter hashPrefix: Whether to prefix the String with `#`
+    /// - Parameter alpha: Whether to include the alpha channel in the hex String
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
     func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         rgbComponents.hex(prefix: prefix, withAlpha: withAlpha)
@@ -177,12 +176,12 @@ extension Color {
     var rgbComponents: RgbComponents {
         RgbComponents(color: self) ?? .black
     }
-
+    
     @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
     var hsbComponents: HsbComponents {
         HsbComponents(color: self) ?? .black
     }
-
+    
     init(_ colorSpace: Color.RGBColorSpace = .sRGB, components: RgbComponents) {
         self.init(colorSpace,
                   red: components.red,
@@ -190,7 +189,7 @@ extension Color {
                   blue: components.blue,
                   opacity: components.alpha)
     }
-
+    
     init(components: HsbComponents) {
         self.init(hue: components.hue,
                   saturation: components.saturation,
@@ -202,12 +201,12 @@ extension Color {
 @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
 extension RgbComponents {
     init?(color: Color) {
-        #if os(macOS)
+#if os(macOS)
         let cgColor = color.cgColor ?? NSColor(color).cgColor
-        #else
+#else
         let cgColor = color.cgColor ?? UIColor(color).cgColor
-        #endif
-
+#endif
+        
         self.init(color: cgColor)
     }
 }
@@ -215,12 +214,12 @@ extension RgbComponents {
 @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
 extension HsbComponents {
     init?(color: Color) {
-        #if os(macOS)
+#if os(macOS)
         let cgColor = color.cgColor ?? NSColor(color).cgColor
-        #else
+#else
         let cgColor = color.cgColor ?? UIColor(color).cgColor
-        #endif
-
+#endif
+        
         self.init(color: cgColor)
     }
 }
@@ -232,7 +231,7 @@ extension Color {
     var rgbComponentsOrBlack: RgbComponents {
         RgbComponents(color: self) ?? .black
     }
-
+    
     var rgbComponentsOrWhite: RgbComponents {
         RgbComponents(color: self) ?? .white
     }
@@ -240,26 +239,26 @@ extension Color {
     var hsbComponentsOrBlack: HsbComponents {
         HsbComponents(color: self) ?? .black
     }
-
+    
     var hsbComponentsOrWhite: HsbComponents {
         HsbComponents(color: self) ?? .white
     }
-
+    
     /// Merge the colors via addition in RGB
     public static func + (lhs: Self, rhs: Self) -> Self {
         lhs.add(color: rhs)
     }
-
+    
     /// Merge the colors via subtraction in RGB
     public static func - (lhs: Self, rhs: Self) -> Self {
         lhs.subtract(color: rhs)
     }
-
+    
     /// Merge the colors via multiplication in RGB
     public static func * (lhs: Self, rhs: Self) -> Self {
         lhs.multiply(color: rhs)
     }
-
+    
     /// Merge the colors via division in RGB
     public static func / (lhs: Self, rhs: Self) -> Self {
         lhs.divide(color: rhs)
@@ -361,21 +360,21 @@ extension Color {
     ///
     /// - Parameters:
     ///     - colorSpace: The ``ColorSpace`` within to apply the calculation
-    ///     - with color: The color to mix with
+    ///     - color: The color to mix with
     /// - Returns: The mixed colors
-    public func mixed(_ colorSpace: ColorSpace = .rgb, with color: Color) -> Color {
+    public func mix(_ colorSpace: ColorSpace = .rgb, color: Color) -> Color {
         switch colorSpace {
         case .rgb:
-            let components = rgbComponents.mixed(components: color.rgbComponents, withAlpha: false)
+            let components = rgbComponents.mix(components: color.rgbComponents, withAlpha: false)
             return Color(components: components)
         case .rgba:
-            let components = rgbComponents.mixed(components: color.rgbComponents, withAlpha: true)
+            let components = rgbComponents.mix(components: color.rgbComponents, withAlpha: true)
             return Color(components: components)
         case .hsb:
-            let components = hsbComponents.mixed(components: color.hsbComponents, withAlpha: false)
+            let components = hsbComponents.mix(components: color.hsbComponents, withAlpha: false)
             return Color(components: components)
         case .hsba:
-            let components = hsbComponents.mixed(components: color.hsbComponents, withAlpha: true)
+            let components = hsbComponents.mix(components: color.hsbComponents, withAlpha: true)
             return Color(components: components)
         }
     }
