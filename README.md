@@ -1,7 +1,7 @@
 # Crayon
 
-![Swift](https://img.shields.io/badge/Swift-5.4_5.5_5.6-orange?style=flat-square)
-![Platforms](https://img.shields.io/badge/Platforms-macOS_iOS_tvOS_watchOS-informational?style=flat-square)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdivadretlaw%2FCrayon%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/divadretlaw/Crayon)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fdivadretlaw%2FCrayon%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/divadretlaw/Crayon)
 
 ## Usage
 
