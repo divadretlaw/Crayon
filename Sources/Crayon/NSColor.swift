@@ -19,9 +19,9 @@ public extension NSColor {
     static func random(_ colorSpace: ColorSpace = .rgb, opacity: Double = 1) -> NSColor {
         switch colorSpace {
         case .rgb, .rgba:
-            return NSColor(components: RgbComponents(alpha: opacity))
+            return NSColor(components: RgbComponents.random(alpha: opacity))
         case .hsb, .hsba:
-            return NSColor(components: HsbComponents(alpha: opacity))
+            return NSColor(components: HsbComponents.random(alpha: opacity))
         }
     }
     

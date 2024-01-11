@@ -119,7 +119,7 @@ final class ColorTests: XCTestCase {
     @available(iOS 14, macOS 12, watchOS 7, tvOS 14, *)
     func testLightenDarken() {
         let color = Color.red
-        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1) ~= color.lightened(percentage: 0.1).hsbComponents.brightness)
+        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1).isAlmostEqual(to: color.lightened(percentage: 0.1).hsbComponents.brightness))
         XCTAssertEqual(color.rgbComponents, color.darkened().lightened().rgbComponents)
     }
     

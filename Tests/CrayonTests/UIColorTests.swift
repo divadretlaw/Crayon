@@ -5,9 +5,9 @@ import XCTest
 final class UIColorTests: XCTestCase {
     @available(iOS 14, watchOS 7, tvOS 14, *)
     func testIsDark() throws {
-        XCTAssertTrue(UIColor(white: 0.25, alpha: 1).isDark == true)
-        XCTAssertTrue(UIColor(white: 0.5, alpha: 1).isDark == false)
-        XCTAssertTrue(UIColor(white: 0.75, alpha: 1).isDark == false)
+        XCTAssertTrue(UIColor(white: 0.25, alpha: 1).isDark)
+        XCTAssertFalse(UIColor(white: 0.5, alpha: 1).isDark)
+        XCTAssertFalse(UIColor(white: 0.75, alpha: 1).isDark)
     }
     
     @available(iOS 14, watchOS 7, tvOS 14, *)
@@ -46,7 +46,7 @@ final class UIColorTests: XCTestCase {
         checkRGB(color: .red, components: RgbComponents(red: 1, green: 0, blue: 0, alpha: 1))
     }
     
-    func checkRGB(color: UIColor, components: RgbComponents) {
+    private func checkRGB(color: UIColor, components: RgbComponents) {
         XCTAssertEqual(RgbComponents(color: color), components)
     }
     
@@ -61,7 +61,7 @@ final class UIColorTests: XCTestCase {
         checkHSB(color: UIColor(red: 0.5, green: 0.2, blue: 1, alpha: 1))
     }
     
-    func checkHSB(color: UIColor) {
+    private func checkHSB(color: UIColor) {
         XCTAssertEqual(HsbComponents(color: color), HsbComponents(rgb: RgbComponents(color: color)))
     }
     
@@ -97,7 +97,7 @@ final class UIColorTests: XCTestCase {
     
     func testLightenDarken() {
         let color = UIColor.red
-        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1) ~= color.lightened(percentage: 0.1).hsbComponents.brightness)
+        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1).isAlmostEqual(to: color.lightened(percentage: 0.1).hsbComponents.brightness))
         XCTAssertEqual(color.rgbComponents, color.darkened().lightened().rgbComponents)
     }
     

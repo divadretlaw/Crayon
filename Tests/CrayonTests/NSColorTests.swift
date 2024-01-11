@@ -4,9 +4,9 @@ import XCTest
 
 final class NSColorTests: XCTestCase {
     func testIsDark() throws {
-        XCTAssertTrue(NSColor(white: 0.25, alpha: 1).isDark == true)
-        XCTAssertTrue(NSColor(white: 0.5, alpha: 1).isDark == false)
-        XCTAssertTrue(NSColor(white: 0.75, alpha: 1).isDark == false)
+        XCTAssertTrue(NSColor(white: 0.25, alpha: 1).isDark)
+        XCTAssertFalse(NSColor(white: 0.5, alpha: 1).isDark)
+        XCTAssertFalse(NSColor(white: 0.75, alpha: 1).isDark)
     }
     
     func testIsLight() {
@@ -44,7 +44,7 @@ final class NSColorTests: XCTestCase {
         checkRGB(color: .red, components: RgbComponents(red: 1, green: 0, blue: 0, alpha: 1))
     }
     
-    func checkRGB(color: NSColor, components: RgbComponents) {
+    private func checkRGB(color: NSColor, components: RgbComponents) {
         XCTAssertEqual(RgbComponents(color: color), components)
     }
     
@@ -56,7 +56,7 @@ final class NSColorTests: XCTestCase {
         checkHSB(color: NSColor(red: 0.5, green: 0.2, blue: 1, alpha: 1))
     }
     
-    func checkHSB(color: NSColor) {
+    private func checkHSB(color: NSColor) {
         guard let lhs = HsbComponents(color: color),
               let rgb = RgbComponents(color: color)
         else {
@@ -92,7 +92,7 @@ final class NSColorTests: XCTestCase {
     
     func testLightenDarken() {
         let color = NSColor.red
-        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1) ~= color.lightened(percentage: 0.1).hsbComponents.brightness)
+        XCTAssertTrue(min(color.hsbComponents.brightness + 0.1, 1).isAlmostEqual(to: color.lightened(percentage: 0.1).hsbComponents.brightness))
         XCTAssertEqual(color.rgbComponents, color.darkened().lightened().rgbComponents)
     }
     

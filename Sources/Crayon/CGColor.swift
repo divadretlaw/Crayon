@@ -5,11 +5,7 @@
 //  Created by David Walter on 20.03.22.
 //
 
-#if canImport(UIKit)
-import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
+import CoreGraphics
 
 public extension CGColor {
     /// Creates a random color by randomly generating the values in the given color space
@@ -23,9 +19,9 @@ public extension CGColor {
     static func random(_ colorSpace: ColorSpace = .rgb, opacity: Double = 1) -> CGColor {
         switch colorSpace {
         case .rgb, .rgba:
-            return CGColor.from(rgb: RgbComponents(alpha: opacity))
+            return CGColor.from(rgb: RgbComponents.random(alpha: opacity))
         case .hsb, .hsba:
-            return CGColor.from(hsb: HsbComponents(alpha: opacity))
+            return CGColor.from(hsb: HsbComponents.random(alpha: opacity))
         }
     }
     

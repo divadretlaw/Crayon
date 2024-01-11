@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HsbComponents: Equatable {
+struct HsbComponents: Equatable, Sendable {
     static var white: HsbComponents {
         HsbComponents(hue: 0, saturation: 0, brightness: 1, alpha: 1)
     }
@@ -15,11 +15,20 @@ struct HsbComponents: Equatable {
     static var black: HsbComponents {
         HsbComponents(hue: 0, saturation: 0, brightness: 0, alpha: 1)
     }
+    
+    static func random(alpha: Double) -> HsbComponents {
+        HsbComponents(
+            hue: Double.random(in: 0 ... 1),
+            saturation: Double.random(in: 0 ... 1),
+            brightness: Double.random(in: 0 ... 1),
+            alpha: alpha
+        )
+    }
 
-    var hue: Double
-    var saturation: Double
-    var brightness: Double
-    var alpha: Double
+    let hue: Double
+    let saturation: Double
+    let brightness: Double
+    let alpha: Double
 
     init(hue: Double, saturation: Double, brightness: Double, alpha: Double) {
         self.hue = hue.normalized()
@@ -63,13 +72,6 @@ struct HsbComponents: Equatable {
         self.alpha = rgb.alpha
     }
     
-    init(alpha: Double) {
-        self.hue = Double.random(in: 0 ... 1)
-        self.saturation = Double.random(in: 0 ... 1)
-        self.brightness = Double.random(in: 0 ... 1)
-        self.alpha = alpha
-    }
-    
     func inverted() -> HsbComponents {
         let hue = (hue * 360 + 180).truncatingRemainder(dividingBy: 360) / 360
         return HsbComponents(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
@@ -106,10 +108,10 @@ struct HsbComponents: Equatable {
     // MARK: - Equatable
 
     static func == (lhs: Self, rhs: Self) -> Bool {
-        guard lhs.hue ~= rhs.hue,
-              lhs.saturation ~= rhs.saturation,
-              lhs.brightness ~= rhs.brightness,
-              lhs.alpha ~= rhs.alpha else { return false }
+        guard lhs.hue.isAlmostEqual(to: rhs.hue),
+              lhs.saturation.isAlmostEqual(to: rhs.saturation),
+              lhs.brightness.isAlmostEqual(to: rhs.brightness),
+              lhs.alpha.isAlmostEqual(to: rhs.alpha) else { return false }
         return true
     }
 

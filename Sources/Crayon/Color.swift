@@ -20,9 +20,9 @@ public extension Color {
     static func random(_ colorSpace: ColorSpace = .rgb, opacity: Double = 1) -> Color {
         switch colorSpace {
         case .rgb, .rgba:
-            return Color(components: RgbComponents(alpha: opacity))
+            return Color(components: RgbComponents.random(alpha: opacity))
         case .hsb, .hsba:
-            return Color(components: HsbComponents(alpha: opacity))
+            return Color(components: HsbComponents.random(alpha: opacity))
         }
     }
     
@@ -201,11 +201,11 @@ extension Color {
 @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
 extension RgbComponents {
     init?(color: Color) {
-#if os(macOS)
+        #if os(macOS)
         let cgColor = color.cgColor ?? NSColor(color).cgColor
-#else
+        #else
         let cgColor = color.cgColor ?? UIColor(color).cgColor
-#endif
+        #endif
         
         self.init(color: cgColor)
     }
@@ -214,11 +214,11 @@ extension RgbComponents {
 @available(iOS 14, macOS 11, watchOS 7, tvOS 14, *)
 extension HsbComponents {
     init?(color: Color) {
-#if os(macOS)
+        #if os(macOS)
         let cgColor = color.cgColor ?? NSColor(color).cgColor
-#else
+        #else
         let cgColor = color.cgColor ?? UIColor(color).cgColor
-#endif
+        #endif
         
         self.init(color: cgColor)
     }

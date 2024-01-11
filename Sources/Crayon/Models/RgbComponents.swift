@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RgbComponents: Equatable {
+struct RgbComponents: Equatable, Sendable {
     static var white: RgbComponents {
         RgbComponents(red: 1, green: 1, blue: 1, alpha: 1)
     }
@@ -16,10 +16,19 @@ struct RgbComponents: Equatable {
         RgbComponents(red: 0, green: 0, blue: 0, alpha: 1)
     }
 
-    var red: Double
-    var green: Double
-    var blue: Double
-    var alpha: Double
+    static func random(alpha: Double) -> RgbComponents {
+        RgbComponents(
+            red: Double.random(in: 0 ... 1),
+            green: Double.random(in: 0 ... 1),
+            blue: Double.random(in: 0 ... 1),
+            alpha: alpha
+        )
+    }
+
+    let red: Double
+    let green: Double
+    let blue: Double
+    let alpha: Double
 
     init(red: Double, green: Double, blue: Double, alpha: Double) {
         self.red = red.normalized()
@@ -88,13 +97,6 @@ struct RgbComponents: Equatable {
         self.init(red: r + m, green: g + m, blue: b + m, alpha: hsb.alpha)
     }
     
-    init(alpha: Double) {
-        self.red = Double.random(in: 0 ... 1)
-        self.green = Double.random(in: 0 ... 1)
-        self.blue = Double.random(in: 0 ... 1)
-        self.alpha = alpha
-    }
-
     func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
         [
             prefix,
@@ -135,8 +137,7 @@ struct RgbComponents: Equatable {
             return nil
         }
 
-        let value: Double = contrast(to: color)
-        return value
+        return contrast(to: color) as Double
     }
 
     func hasContrast(with color: RgbComponents) -> Bool {
@@ -146,8 +147,7 @@ struct RgbComponents: Equatable {
 
     func hasContrast(with color: RgbComponents?) -> Bool? {
         guard let color = color else { return nil }
-        let value: Bool = hasContrast(with: color)
-        return value
+        return hasContrast(with: color) as Bool
     }
     
     func negative(withAlpha: Bool) -> RgbComponents {
@@ -157,10 +157,10 @@ struct RgbComponents: Equatable {
     // MARK: - Equatable
 
     static func == (lhs: Self, rhs: Self) -> Bool {
-        guard lhs.red ~= rhs.red,
-              lhs.green ~= rhs.green,
-              lhs.blue ~= rhs.blue,
-              lhs.alpha ~= rhs.alpha else { return false }
+        guard lhs.red.isAlmostEqual(to: rhs.red),
+              lhs.green.isAlmostEqual(to: rhs.green),
+              lhs.blue.isAlmostEqual(to: rhs.blue),
+              lhs.alpha.isAlmostEqual(to: rhs.alpha) else { return false }
         return true
     }
 
