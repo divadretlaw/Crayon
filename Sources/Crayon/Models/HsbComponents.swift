@@ -30,12 +30,16 @@ struct HsbComponents: Equatable, Sendable {
     let brightness: Double
     let alpha: Double
 
+    // MARK: - init
+    
     init(hue: Double, saturation: Double, brightness: Double, alpha: Double) {
         self.hue = hue.normalized()
         self.saturation = saturation.normalized()
         self.brightness = brightness.normalized()
         self.alpha = alpha.normalized()
     }
+    
+    // MARK: Converters
 
     init(rgb: RgbComponents) {
         let max = max(rgb.red, rgb.green, rgb.blue)
@@ -71,6 +75,8 @@ struct HsbComponents: Equatable, Sendable {
 
         self.alpha = rgb.alpha
     }
+    
+    // MARK: - Methods
     
     func inverted() -> HsbComponents {
         let hue = (hue * 360 + 180).truncatingRemainder(dividingBy: 360) / 360

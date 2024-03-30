@@ -212,22 +212,22 @@ extension NSColor {
         HsbComponents(color: self) ?? .white
     }
     
-    /// Merge the colors via addition in RGB
+    /// Merge the colors via addition in ``ColorSpace/rgb``
     public static func + (lhs: NSColor, rhs: NSColor) -> NSColor {
         lhs.add(color: rhs)
     }
 
-    /// Merge the colors via subtraction in RGB
+    /// Merge the colors via subtraction in ``ColorSpace/rgb``
     public static func - (lhs: NSColor, rhs: NSColor) -> NSColor {
         lhs.subtract(color: rhs)
     }
 
-    /// Merge the colors via multiplication in RGB
+    /// Merge the colors via multiplication in ``ColorSpace/rgb``
     public static func * (lhs: NSColor, rhs: NSColor) -> NSColor {
         lhs.multiply(color: rhs)
     }
 
-    /// Merge the colors via division in RGB
+    /// Merge the colors via division in ``ColorSpace/rgb``
     public static func / (lhs: NSColor, rhs: NSColor) -> NSColor {
         lhs.divide(color: rhs)
     }

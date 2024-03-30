@@ -16,11 +16,9 @@ let package = Package(
             targets: ["Crayon"]
         ),
     ],
-    dependencies: [],
     targets: [
         .target(
-            name: "Crayon",
-            dependencies: []
+            name: "Crayon"
         ),
         .testTarget(
             name: "CrayonTests",

@@ -30,6 +30,8 @@ struct RgbComponents: Equatable, Sendable {
     let blue: Double
     let alpha: Double
 
+    // MARK: - init
+    
     init(red: Double, green: Double, blue: Double, alpha: Double) {
         self.red = red.normalized()
         self.green = green.normalized()
@@ -71,6 +73,8 @@ struct RgbComponents: Equatable, Sendable {
         guard let hexValue = UInt(hex, radix: 16) else { return nil }
         self.init(hexValue, alpha: alpha)
     }
+    
+    // MARK: Converters
 
     init(hsb: HsbComponents) {
         let c = hsb.brightness * hsb.saturation
@@ -97,18 +101,8 @@ struct RgbComponents: Equatable, Sendable {
         self.init(red: r + m, green: g + m, blue: b + m, alpha: hsb.alpha)
     }
     
-    func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
-        [
-            prefix,
-            String(format: "%02X", Int(red * 255)),
-            String(format: "%02X", Int(green * 255)),
-            String(format: "%02X", Int(blue * 255)),
-            withAlpha ? String(format: "%02X", Int(alpha * 255)) : nil
-        ]
-        .compactMap { $0 }
-        .joined()
-    }
-
+    // MARK: - Getters
+    
     var lightness: Double {
         ((red * 299) + (green * 587) + (blue * 114)) / 1000
     }
@@ -119,6 +113,20 @@ struct RgbComponents: Equatable, Sendable {
 
     var isLight: Bool {
         !isDark
+    }
+    
+    // MARK: - Methods
+
+    func hex(prefix: String? = "#", withAlpha: Bool = false) -> String {
+        [
+            prefix,
+            String(format: "%02X", Int(red * 255)),
+            String(format: "%02X", Int(green * 255)),
+            String(format: "%02X", Int(blue * 255)),
+            withAlpha ? String(format: "%02X", Int(alpha * 255)) : nil
+        ]
+            .compactMap { $0 }
+            .joined()
     }
 
     func contrast(to color: RgbComponents) -> Double {

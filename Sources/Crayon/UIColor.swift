@@ -197,22 +197,22 @@ extension HsbComponents {
 // MARK: - Calculations
 
 extension UIColor {
-    /// Merge the colors via addition in RGB
+    /// Merge the colors via addition in ``ColorSpace/rgb``
     public static func + (lhs: UIColor, rhs: UIColor) -> UIColor {
         lhs.add(color: rhs)
     }
 
-    /// Merge the colors via subtraction in RGB
+    /// Merge the colors via subtraction in ``ColorSpace/rgb``
     public static func - (lhs: UIColor, rhs: UIColor) -> UIColor {
         lhs.subtract(color: rhs)
     }
 
-    /// Merge the colors via multiplication in RGB
+    /// Merge the colors via multiplication in ``ColorSpace/rgb``
     public static func * (lhs: UIColor, rhs: UIColor) -> UIColor {
         lhs.multiply(color: rhs)
     }
 
-    /// Merge the colors via division in RGB
+    /// Merge the colors via division in ``ColorSpace/rgb``
     public static func / (lhs: UIColor, rhs: UIColor) -> UIColor {
         lhs.divide(color: rhs)
     }

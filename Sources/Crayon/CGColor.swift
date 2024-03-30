@@ -248,22 +248,22 @@ extension CGColor {
         HsbComponents(color: self) ?? .white
     }
 
-    /// Merge the colors via addition in RGB
+    /// Merge the colors via addition in ``ColorSpace/rgb``
     public static func + (lhs: CGColor, rhs: CGColor) -> CGColor {
         lhs.add(color: rhs)
     }
 
-    /// Merge the colors via subtraction in RGB
+    /// Merge the colors via subtraction in ``ColorSpace/rgb``
     public static func - (lhs: CGColor, rhs: CGColor) -> CGColor {
         lhs.subtract(color: rhs)
     }
 
-    /// Merge the colors via multiplication in RGB
+    /// Merge the colors via multiplication in ``ColorSpace/rgb``
     public static func * (lhs: CGColor, rhs: CGColor) -> CGColor {
         lhs.multiply(color: rhs)
     }
 
-    /// Merge the colors via division in RGB
+    /// Merge the colors via division in ``ColorSpace/rgb``
     public static func / (lhs: CGColor, rhs: CGColor) -> CGColor {
         lhs.divide(color: rhs)
     }
